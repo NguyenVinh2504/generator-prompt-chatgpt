@@ -5,7 +5,7 @@ const formatInput = $('#formatInput');
 const getContextBtn = $('#get-context-btn');
 const translateBtn = $('#translate-btn');
 const copyBtn = $('#copy-btn');
-
+const title = $('#title')
 const debounce = function (fun, time = 500) {
   let id = null;
   return function (...arg) {
@@ -22,7 +22,6 @@ const getContext = function () {
     return;
   }
   contextValue = valueInput;
-  formatInput.value = valueInput;
   localStorage.setItem('context', JSON.stringify(valueInput));
   console.log({ valueInput });
 };
@@ -69,12 +68,14 @@ getContextBtn.addEventListener('click', () => {
   isSwitch = false;
   input.value = contextValue;
   formatInput.value = '';
+  title.innerText = 'Context';
 });
 
 translateBtn.addEventListener('click', () => {
   isSwitch = true;
   input.value = '';
   formatInput.value = '';
+  title.innerText = 'Translate';
 });
 
 input.addEventListener(
@@ -84,6 +85,10 @@ input.addEventListener(
   })
 );
 
+// input.addEventListener('scroll',function(e){
+// console.log('e', e.target.scrollTop);
+// formatInput.scrollTo(0, e.target.scrollTop)
+// })
 copyBtn.addEventListener('click', async function () {
   formatInput.setSelectionRange(0, 1e5);
   await navigator.clipboard.writeText(formatInput.value);
