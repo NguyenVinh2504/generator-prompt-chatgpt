@@ -89,9 +89,9 @@ checkBtn.addEventListener('click', () => {
               .map(line => {
                 return `
                 <tr class="capitalize [&_th]:text-xl">
-                    <th class="px-5 py-2">${line.name}</th>
-                    <th class="px-5 py-2">${line.line}</th>
-                    <th class="px-5 py-2">${line.value}</th>
+                    <td class="px-5 py-2">${line.name}</td>
+                    <td class="px-5 py-2">${line.line}</td>
+                    <td class="px-5 py-2">${line.value}</td>
                 </tr>
                 `;
               })
