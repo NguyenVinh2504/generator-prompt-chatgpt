@@ -5,7 +5,7 @@ const formatInput = $('#formatInput');
 const getContextBtn = $('#get-context-btn');
 const translateBtn = $('#translate-btn');
 const copyBtn = $('#copy-btn');
-const title = $('#title')
+const title = $('#title');
 const debounce = function (fun, time = 500) {
   let id = null;
   return function (...arg) {
@@ -36,6 +36,7 @@ const getTranslate = function () {
     alert('Chưa tạo context');
     return;
   }
+  localStorage.setItem('phuDeMau', valueInput);
   formatInput.value = '';
   formatInput.value = `
 # Requirement: “Translate this subtitle into Vietnamese.”

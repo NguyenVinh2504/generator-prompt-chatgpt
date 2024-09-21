@@ -25,6 +25,7 @@ const modalResult = $('#model-result');
  * @type {HTMLDivElement}
  */
 const overlayModel = $('#overlay-model');
+console.log('f');
 
 overlayModel.addEventListener('click', function (e) {
   const isHidden = modalResult.classList.contains('hidden');
@@ -48,6 +49,11 @@ const parseSubtitles = subtile => {
   });
   return results;
 };
+
+subtileInputOne.addEventListener('input', () => {
+  subtileInputTwo.value = localStorage.getItem('phuDeMau');
+});
+
 checkBtn.addEventListener('click', () => {
   const subtitleBlocks1 = parseSubtitles(subtileInputOne.value);
   const subtitleBlocks2 = parseSubtitles(subtileInputTwo.value);
