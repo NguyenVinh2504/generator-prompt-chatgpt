@@ -28,7 +28,7 @@ const overlayModel = $('#overlay-model');
 console.log('f');
 
 overlayModel.addEventListener('click', function (e) {
-  const isHidden = modalResult.classList.contains('hidden');
+  const isHidden = modalResult.classList.contains('invisible');
   modalResult.classList.toggle('invisible', !isHidden);
   overlayModel.classList.toggle('invisible', !isHidden);
 
@@ -41,15 +41,15 @@ const parseSubtitles = subtile => {
   const results = [];
   blocksSub.forEach(block => {
     const component = block.split('\n');
-    let [line, times] = component;
-    times = times.match(
+    const [line, times] = component;
+    const findTimes = times.match(
       /(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/
     );
 
     // results.push(times ? times[0] : 'Không có time');
     results.push({
       line,
-      times: times?.[0] || 'Không có time',
+      times: findTimes?.[0] || 'Không có time',
     });
   });
   return results;
