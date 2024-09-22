@@ -41,11 +41,16 @@ const parseSubtitles = subtile => {
   const results = [];
   blocksSub.forEach(block => {
     const component = block.split('\n');
-    const times = component[1].match(
+    let [line, times] = component;
+    times = times.match(
       /(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/
     );
 
-    results.push(times ? times[0] : 'Không có time');
+    // results.push(times ? times[0] : 'Không có time');
+    results.push({
+      line,
+      times: times?.[0] || 'Không có time',
+    });
   });
   return results;
 };
@@ -57,7 +62,7 @@ subtileInputOne.addEventListener('input', () => {
 checkBtn.addEventListener('click', () => {
   const subtitleBlocks1 = parseSubtitles(subtileInputOne.value);
   const subtitleBlocks2 = parseSubtitles(subtileInputTwo.value);
-  //   console.log(subtitleBlocks1, subtitleBlocks2);
+  // console.log(subtitleBlocks1, subtitleBlocks2);
 
   if (subtitleBlocks1.length !== subtitleBlocks2.length) {
     alert('Hai đoạn phụ đề khác nhau về số lượng câu');
@@ -66,18 +71,20 @@ checkBtn.addEventListener('click', () => {
 
   const listError = [];
   subtitleBlocks1.forEach((timeSub1, index) => {
-    let isDiff = !subtitleBlocks2.includes(timeSub1);
+    const subItemBlock2 = subtitleBlocks2[index];
+    let isDiff = subItemBlock2.times !== timeSub1.times;
+
     if (isDiff) {
       listError.push([
         {
           name: 'subtile cần check',
-          line: index + 1,
-          value: timeSub1,
+          line: timeSub1.line,
+          value: timeSub1.times,
         },
         {
           name: 'subtile mẫu',
-          line: index + 1,
-          value: subtitleBlocks2[index],
+          line: subItemBlock2.line,
+          value: subItemBlock2.times,
         },
       ]);
     }
