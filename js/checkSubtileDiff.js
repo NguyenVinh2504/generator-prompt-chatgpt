@@ -11,6 +11,12 @@ const subtileInputTwo = $('#subtile-input-two');
  * @type {HTMLButtonElement}  Button element used to trigger check action.
  */
 const checkBtn = $('#check-btn'); // as HTMLButtonElement
+
+/**
+ * @type {HTMLButtonElement}  Button element used to trigger check action.
+ */
+const getSampleSubBtn = $('#get-sample-sub-btn'); // as HTMLButtonElement
+
 /**
  *
  * @param {string} subtile
@@ -42,7 +48,7 @@ const parseSubtitles = subtile => {
   blocksSub.forEach(block => {
     const component = block.split('\n');
     const [line, times] = component;
-    const findTimes = times.match(
+    const findTimes = times?.match(
       /(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/
     );
 
@@ -55,11 +61,12 @@ const parseSubtitles = subtile => {
   return results;
 };
 
-subtileInputOne.addEventListener('input', () => {
-  subtileInputTwo.value = localStorage.getItem('phuDeMau');
+getSampleSubBtn.addEventListener('click', () => {
+  subtileInputTwo.value = localStorage.getItem('sampleSubtitle');
 });
 
 checkBtn.addEventListener('click', () => {
+  if (!subtileInputOne.value || !subtileInputTwo.value) return;
   const subtitleBlocks1 = parseSubtitles(subtileInputOne.value);
   const subtitleBlocks2 = parseSubtitles(subtileInputTwo.value);
   // console.log(subtitleBlocks1, subtitleBlocks2);

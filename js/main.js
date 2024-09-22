@@ -36,7 +36,7 @@ const getTranslate = function () {
     alert('Chưa tạo context');
     return;
   }
-  localStorage.setItem('phuDeMau', valueInput);
+  localStorage.setItem('sampleSubtitle', valueInput);
   formatInput.value = '';
   formatInput.value = `
 # Requirement: “Translate this subtitle into Vietnamese.”
