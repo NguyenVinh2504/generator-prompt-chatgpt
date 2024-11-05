@@ -6,6 +6,11 @@ const getContextBtn = $('#get-context-btn');
 const translateBtn = $('#translate-btn');
 const copyBtn = $('#copy-btn');
 const title = $('#title');
+
+const editPromptModal = $('#edit-prompt-modal');
+const editPromptCloseBtn = $('#edit-prompt-close-btn');
+const inputEditPrompt = $('#input-edit-prompt');
+const editPromptModalOpenBtn = $('#edit-prompt-modal-open-btn');
 const debounce = function (fun, time = 500) {
   let id = null;
   return function (...arg) {
@@ -37,30 +42,22 @@ const getTranslate = function () {
     return;
   }
   localStorage.setItem('sampleSubtitle', valueInput);
+  const prompt = localStorage.getItem('prompt');
   formatInput.value = '';
   formatInput.value = `
 # Requirement: “Translate this subtitle into Vietnamese.”
 ---
 ### I have this subtitle: 
-\`\`\`
+<p>
 ${valueInput}
-\`\`\`
+</p>
 ---
 ### Context of subtitle: 
-\`\`\`
+<p>
 ${contextValue}
-\`\`\`
+</p>
 ---
-### Please do exactly what I ask. Do not modify it arbitrarily.
-- Here are my specific requests:
-    1.	Maintain the “correct format” of the subtitle,
-    2.	"Accurately keep" the "time stamps" of the subtitle I have sent.
-    3.	Keep the “correct” number “order” of the subtitle sentences, do not change the numbering or the amount of sentences in the subtitle section.
-    4.	The translated sentence must make sense and be understandable when read.
-    5.	Keep the main idea of the original sentence.
-    6.	Ensure correct grammar and suitability to the context.
-    7.	Keep the variables mentioned, terms in programming, in JavaScript untranslated.
-    8.  Please check the grammar and spelling to make sure they're correct.
+${prompt}
 `.trim();
   console.log({ value: formatInput.value }, this);
 };
@@ -93,4 +90,33 @@ input.addEventListener(
 copyBtn.addEventListener('click', async function () {
   formatInput.setSelectionRange(0, 1e5);
   await navigator.clipboard.writeText(formatInput.value);
+});
+
+function toggleModalEditPrompt(isOpen) {
+  if (isOpen) {
+    inputEditPrompt.value = localStorage.getItem('prompt');
+    editPromptModal.classList.remove('invisible', 'opacity-0');
+    editPromptModal.classList.add('visible', 'opacity-100');
+  } else {
+    editPromptModal.classList.remove('visible', 'opacity-100');
+    editPromptModal.classList.add('invisible', 'opacity-0');
+  }
+}
+
+editPromptModalOpenBtn.addEventListener('click', () => {
+  toggleModalEditPrompt(true);
+});
+
+function savePrompt(prompt) {
+  if (!prompt) return;
+  const promptStore = localStorage.getItem('prompt');
+  if (promptStore.includes(prompt)) {
+    return;
+  }
+  localStorage.setItem('prompt', prompt);
+}
+
+editPromptCloseBtn.addEventListener('click', () => {
+  savePrompt(inputEditPrompt.value);
+  toggleModalEditPrompt(false);
 });
