@@ -19,16 +19,22 @@ const debounce = function (fun, time = 500) {
   };
 };
 
-let contextValue = JSON.parse(localStorage.getItem('context'));
+// let contextValue = JSON.parse(localStorage.getItem('context')) || '';
 let isSwitch = false;
 const getContext = function () {
-  const valueInput = input.value;
-  if (!valueInput) {
-    return;
+  const valueInput = input.value.trim();
+  if (valueInput) {
+    // contextValue = valueInput;
+    // localStorage.setItem('context', JSON.stringify(valueInput));
+    // console.log({ valueInput });
+    formatInput.value = '';
+    formatInput.value = `
+# I have this subtitle: 
+${valueInput}
+---
+Can you tell me the context of this subtitle? Please include approximately 500 characters. Note the context of the subtitles, not the summary.
+`.trim();
   }
-  contextValue = valueInput;
-  localStorage.setItem('context', JSON.stringify(valueInput));
-  console.log({ valueInput });
 };
 
 const getTranslate = function () {
@@ -37,36 +43,49 @@ const getTranslate = function () {
     formatInput.value = '';
     return;
   }
-  if (!contextValue) {
-    alert('Chưa tạo context');
-    return;
-  }
+  // if (!contextValue) {
+  //   alert('Chưa tạo context');
+  //   return;
+  // }
   localStorage.setItem('sampleSubtitle', valueInput);
-  const prompt = localStorage.getItem('prompt');
+  const prompt = localStorage.getItem('prompt') || '';
   formatInput.value = '';
   formatInput.value = `
-# Requirement: “Translate this subtitle into Vietnamese.”
----
-### I have this subtitle: 
-<p>
+# I have this subtitle: 
 ${valueInput}
-</p>
----
-### Context of subtitle: 
-<p>
-${contextValue}
-</p>
 ---
 ${prompt}
 `.trim();
   console.log({ value: formatInput.value }, this);
 };
 
+// input.addEventListener('scroll',function(e){
+// console.log('e', e.target.scrollTop);
+// formatInput.scrollTo(0, e.target.scrollTop)
+// })
+
+function toggleModalEditPrompt(isOpen) {
+  if (isOpen) {
+    inputEditPrompt.value = localStorage.getItem('prompt');
+
+    editPromptModal.classList.replace('invisible', 'visible');
+    editPromptModal.classList.replace('opacity-0', 'opacity-100');
+  } else {
+    editPromptModal.classList.replace('visible', 'invisible');
+    editPromptModal.classList.replace('opacity-100', 'opacity-0');
+  }
+}
+
+function savePrompt(prompt) {
+  if (prompt && localStorage.getItem('prompt') !== prompt) {
+    localStorage.setItem('prompt', prompt);
+  }
+}
+
 getContextBtn.addEventListener('click', () => {
   isSwitch = false;
-  input.value = contextValue;
   formatInput.value = '';
-  title.innerText = 'Context';
+  title.innerText = 'Prompt Get Context';
 });
 
 translateBtn.addEventListener('click', () => {
@@ -78,43 +97,19 @@ translateBtn.addEventListener('click', () => {
 
 input.addEventListener(
   'input',
-  debounce(() => {
-    isSwitch ? getTranslate() : getContext();
+  debounce(function () {
+    isSwitch ? getTranslate.call(this) : getContext.call(this);
   })
 );
 
-// input.addEventListener('scroll',function(e){
-// console.log('e', e.target.scrollTop);
-// formatInput.scrollTo(0, e.target.scrollTop)
-// })
 copyBtn.addEventListener('click', async function () {
   formatInput.setSelectionRange(0, 1e5);
   await navigator.clipboard.writeText(formatInput.value);
 });
 
-function toggleModalEditPrompt(isOpen) {
-  if (isOpen) {
-    inputEditPrompt.value = localStorage.getItem('prompt');
-    editPromptModal.classList.remove('invisible', 'opacity-0');
-    editPromptModal.classList.add('visible', 'opacity-100');
-  } else {
-    editPromptModal.classList.remove('visible', 'opacity-100');
-    editPromptModal.classList.add('invisible', 'opacity-0');
-  }
-}
-
 editPromptModalOpenBtn.addEventListener('click', () => {
   toggleModalEditPrompt(true);
 });
-
-function savePrompt(prompt) {
-  if (!prompt) return;
-  const promptStore = localStorage.getItem('prompt');
-  if (promptStore.includes(prompt)) {
-    return;
-  }
-  localStorage.setItem('prompt', prompt);
-}
 
 editPromptCloseBtn.addEventListener('click', () => {
   savePrompt(inputEditPrompt.value);
