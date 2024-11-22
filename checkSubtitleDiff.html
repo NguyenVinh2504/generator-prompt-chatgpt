@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check time subtile</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -45,9 +46,9 @@
         </div>
     </div>
     <div id="model-result"
-        class="fixed z-[1] w-6/12 max-h-[90vh] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] invisible opacity-0 transition-all duration-500">
-        <table class="w-full overflow-hidden rounded-md">
-            <thead class="bg-gray-700 text-gray-400">
+        class="bg-gray-700 overflow-auto rounded-md fixed z-[1] w-6/12 max-h-[90vh] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] invisible opacity-0 transition-all duration-500">
+        <table class="w-full">
+            <thead class="bg-gray-700 text-gray-400 sticky top-0">
                 <tr>
                     <th>Name</th>
                     <th>Line</th>

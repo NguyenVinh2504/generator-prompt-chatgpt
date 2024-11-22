@@ -42,6 +42,9 @@ overlayModel.addEventListener('click', function (e) {
   overlayModel.classList.toggle('opacity-0', !isHidden);
 });
 
+/**
+ * @param {string} subtile
+ */
 const parseSubtitles = subtile => {
   const blocksSub = subtile.toLocaleLowerCase().trim().split('\n\n');
   const results = [];
