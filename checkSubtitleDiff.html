@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check time subtile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="bg-[#cccc] w-full h-screen p-14 m-auto  flex flex-col items-start">
+        <a href="./"
+            class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 inline-block">Back
+            Home</a>
+        <div class="grid grid-cols-12 flex-1 gap-4 w-full">
+            <div class="lg:col-span-6 col-span-12">
+                <div class="h-full flex-1 flex flex-col">
+                    <textarea name="subtile-input-one" id="subtile-input-one"
+                        class="resize-none h-full block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Phụ đề cần check"></textarea>
+                </div>
+            </div>
+            <!-- <div class="col-span-2">
+                <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+                </svg>
+            </div> -->
+            <div class="lg:col-span-6 col-span-12">
+                <div class="h-full flex-1 flex flex-col">
+                    <textarea name="subtile-input-two" id="subtile-input-two"
+                        class="resize-none h-full block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Phụ đề mẫu"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="button" id="check-btn"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Check</button>
+            <button type="button" id="get-sample-sub-btn"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get
+                Sample Subtitle</button>
+        </div>
+    </div>
+    <div id="model-result"
+        class="bg-gray-700 overflow-auto rounded-md fixed z-[1] w-6/12 max-h-[90vh] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] invisible opacity-0 transition-all duration-500">
+        <table class="w-full">
+            <thead class="bg-gray-700 text-gray-400 sticky top-0">
+                <tr>
+                    <th>Name</th>
+                    <th>Line</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody class="bg-gray-800 text-white [&_tr:nth-child(odd)]:bg-gray-900">
+                <!-- <tr class="border-b h-">
+                    <th class="px-5 py-2">Name</th>
+                    <th class="px-5 py-2">Name</th>
+                    <th class="px-5 py-2">Name</th>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <div id="overlay-model" class="fixed inset-0 bg-[rgba(0,0,0,0.5)] invisible opacity-0 transition-all duration-500">
+    </div>
+    <script src="/src/checkSubtileDiff.ts">
+    </script>
+</body>
+
+</html>
